@@ -1,5 +1,6 @@
 
 Open your favourite IDE or a simple code editor like notepad++
+<br>
 I use [VSCODE](https://code.visualstudio.com/download)
 
 ## Create a file and rename it to 'credentials.js' and save your credentials in it
