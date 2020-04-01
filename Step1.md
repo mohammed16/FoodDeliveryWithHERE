@@ -79,9 +79,9 @@ Add the following code before </script> tag
 ```javascript
             // create an icon for the marker. Choose any image you want. I created mine using draw.io 
             
-            homeIcon = new H.map.Icon('img/home.png');
+            var homeIcon = new H.map.Icon('img/home.png');
             
-            posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
+            var posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
                 
             // Add the marker to the map 
 

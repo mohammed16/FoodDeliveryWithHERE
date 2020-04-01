@@ -54,11 +54,6 @@ Add the following code before </script> tag
             }
 
             map.addObject(restGroup);
-
-            //  get geo bounding box for the group and set it to the map
-            map.getViewModel().setLookAtData({
-                bounds: restGroup.getBoundingBox()
-            });
         }
 
 ```
