@@ -5,12 +5,10 @@ Add the following code before </script> tag
             function showDeliveryRest(){
 
                 let params = {
-                    // "api" : "discover.search.hereapi.com/v1/discover",
                     "api" : "browse.search.hereapi.com/v1/browse",
                     "apiKey" : window.hereAPIKeys.REST_Key, // REST APIKEY
                     "at" : myPosition.lat+','+myPosition.lng, // position in lat,lng format as opposed to {lat:x, lng:y}
                     "q" : "restaurant",
-                    // "in": "countryCode:DEU",
                     "categories" : "100-1000-0000,100-1000-0003", // category Take Out and Delivery Only 
                     // for more, got to https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics-places/places-category-system-full.html
                     "limit" : 100
