@@ -13,7 +13,7 @@ In this workshop we will learn to use the JS and REST APIs from the HERE Locatio
 [Register](https://developer.here.com/freemium) for a free developer account</br>
 
 # Generate apikeys
-![Folding in action](/img.Day0Gif.gif)
+![Folding in action](/img/Day0Gif.gif)
 
 # Let's begin!
 
