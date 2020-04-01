@@ -50,10 +50,11 @@
         var router = platform.getRoutingService();
 
         // create a marker object 
-        homeIcon = new H.map.Icon('img/home.png');
-        takeOutIcon = new H.map.Icon('img/takeout.png');
+        var homeIcon = new H.map.Icon('img/home.png');
+       
+        var takeOutIcon = new H.map.Icon('img/takeout.png');
 
-        posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
+        var posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
             
         // Add the marker to the map 
 
@@ -80,30 +81,29 @@
         })
         .then(response => response.json())
         .then(response => {
-                    console.log(response)
-                    var restGroup = new H.map.Group();
-                    for(let i = 0; i<params.limit; i++){
-                        let restPosition = response.items[i].position; 
-                        let data = response.items[i].title;
-                        // let bubble =  new H.ui.InfoBubble(restPosition,{content: data});
-                        // ui.addBubble(bubble);
-
-                        let restMarker = new H.map.Marker(restPosition,{icon: takeOutIcon} );
-                        restMarker.setData(data);
-                        // restMarker.setPosition(restPosition);
-                        restGroup.addObject(restMarker);
-                    }
-                    map.addObject(restGroup);
-                    //  get geo bounding box for the group and set it to the map
-                    map.getViewModel().setLookAtData({
-                        bounds: restGroup.getBoundingBox()
-                    });
-
+                    displayRestaurants(response);
             }, error => {
                     console.error(error);
             });
 
         }
+
+        function displayRestaurants(response){
+            var restGroup = new H.map.Group();
+            for(let i = 0; i<response.items.length; i++){
+                let restPosition = response.items[i].position; 
+                let data = response.items[i].title;
+                let restMarker = new H.map.Marker(restPosition,{icon: takeOutIcon} );
+                restMarker.setData(data);
+                restGroup.addObject(restMarker);
+            }
+            map.addObject(restGroup);
+            //  get geo bounding box for the group and set it to the map
+            map.getViewModel().setLookAtData({
+                bounds: restGroup.getBoundingBox()
+            });
+        }
+
 
         map.addEventListener('tap', function (evt) {
 
@@ -116,12 +116,11 @@
                 // show info bubble
                 ui.addBubble(bubble);
                 let restPos= evt.target.getGeometry();
-
                 showRoute(restPos);
-                
             }
-
-        }, false);
+        }, 
+            false
+        );
 
         function showRoute(restPos){
 
@@ -153,28 +152,8 @@
                 endPoint,
                 linestring;
             if(result.response.route) {
-                console.log(result.response);
-
-              
                 // Pick the first route from the response:
                 let route = result.response.route[0];
-                let maneuver = route.leg[0].maneuver;
-                let totalTravelTime = 0;
-               
-                for(let i=0; i< maneuver.length; i++){
-
-                    totalTravelTime += maneuver[i].travelTime ;
-
-                    instructions = maneuver[i].instruction;
-                    // console.log(instructions)
-                    document.getElementById("panel").innerHTML+= (i+1) + ') '+instructions +  `<br>`;
-
-                }
-
-                document.getElementById("panel").innerHTML+="Estimated time : " + (totalTravelTime/60) + ' min' ;
-
-                
-
                 // Pick the route's shape:
                 routeShape = route.shape;
 
@@ -198,9 +177,30 @@
                 // Add the route polyline and the two markers to the map:
                 map.addObject(routeLine);
 
+                let maneuver = route.leg[0].maneuver;
+                displayInstructions(maneuver);
+
                 // Set the map's viewport to make the whole route visible:
                 map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
             }
         };
+
+        function displayInstructions(maneuver){
+
+            let totalTravelTime = 0;
+               
+                for(let i=0; i< maneuver.length; i++){
+
+                    totalTravelTime += maneuver[i].travelTime ;
+
+                    instructions = maneuver[i].instruction;
+                    // console.log(instructions)
+                    document.getElementById("panel").innerHTML+= (i+1) + ') '+instructions +  `<br>`;
+
+                }
+
+            document.getElementById("panel").innerHTML+="Estimated time : " + (totalTravelTime/60) + ' min' ;
+        }
+        
     </script>
 </html>

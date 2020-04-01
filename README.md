@@ -4,8 +4,8 @@ In this workshop we will learn to use the JS and REST APIs from the HERE Locatio
 
 #### Step 1 : We render a map and place a marker on our current position with a custom image
 #### Step 2 : We search for all takeout restaurants around us and place markers on them
-#### Step 3 : We will find a route from one of the restaurants
-#### Step 4 : We will draw the route given by the router using polyline.
+#### Step 3 : We will find and draw a route from one of the restaurants
+#### Step 4 : We will display instructions to follow the route.
 #### Beyond : Final code with visual customizations.
 
 # To access any of the APIs, first get your credentials by signing up for a freemium account
