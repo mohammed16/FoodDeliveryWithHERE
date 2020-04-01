@@ -32,5 +32,45 @@ Add the following code before </script> tag
                     alert(error.message);
             });    
         }
+
+```
+# Draw the route received form the Routing API using Polyline
+Add the following code before </script> tag
+
+```javascript
+        // Define a callback function to process the routing response:
+        var onResult = function(result) {
+            var route,
+                routeShape,
+                startPoint,
+                endPoint,
+                linestring;
+            if(result.response.route) {
+                // Pick the first route from the response:
+                let route = result.response.route[0];
+                // Pick the route's shape:
+                routeShape = route.shape;
+
+                // Create a linestring to use as a point source for the route line
+                linestring = new H.geo.LineString();
+
+                // Push all the points in the shape into the linestring:
+                routeShape.forEach(function(point) {
+                    var parts = point.split(',');
+                    linestring.pushLatLngAlt(parts[0], parts[1]);
+                });
+
+                // Create a polyline to display the route:
+                var routeLine = new H.map.Polyline(linestring, {
+                    style: { strokeColor: 'RGB(116, 66, 200)', lineWidth: 7 }
+                });
+                // Add the route polyline and the two markers to the map:
+                map.addObject(routeLine);
+                
+                // Set the map's viewport to make the whole route visible:
+                map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
+            }
+        };
+            
 ```
 [![Foo](/img/s4.png)](/Step4.md) 
