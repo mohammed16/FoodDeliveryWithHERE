@@ -53,6 +53,7 @@
         var homeIcon = new H.map.Icon('img/home.png');
        
         var takeOutIcon = new H.map.Icon('img/takeout.png');
+    
 
         var posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
             
@@ -149,6 +150,8 @@
                 startPoint,
                 endPoint,
                 linestring;
+
+            let powerpuffIcon = new H.map.Icon('img/powerPuff.png');
             if(result.response.route) {
                 // Pick the first route from the response:
                 let route = result.response.route[0];
@@ -164,12 +167,23 @@
                     linestring.pushLatLngAlt(parts[0], parts[1]);
                 });
 
+                startPoint = route.waypoint[0].mappedPosition;
+
+                // Create a marker for the start point:
+                var startMarker = new H.map.Marker({
+                    lat: startPoint.latitude,
+                    lng: startPoint.longitude
+                },{
+                    icon : powerpuffIcon
+                });
+
+
                 // Create a polyline to display the route:
                 var routeLine = new H.map.Polyline(linestring, {
                     style: { strokeColor: 'RGB(116, 66, 200)', lineWidth: 7 }
                 });
                 // Add the route polyline and the two markers to the map:
-                map.addObject(routeLine);
+                map.addObjects([routeLine,startMarker]);
 
                 let maneuver = route.leg[0].maneuver;
                 displayInstructions(maneuver);
