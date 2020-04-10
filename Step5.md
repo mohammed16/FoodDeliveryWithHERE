@@ -3,7 +3,6 @@
 
 Check [final code](/index.html) with modifications
 
-
 # Contact Information
 [![Foo](/img/twitter.png)](https://twitter.com/heredev) 
 [![Foo](/img/slack.png)](http://t.her.is/slack) 

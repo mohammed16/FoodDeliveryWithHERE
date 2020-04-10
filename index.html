@@ -9,7 +9,6 @@
         <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
         <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
         <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
-        <script type="text/javascript" src="credentials.js"></script>
     </head>
     <body>
         <h1 style="text-align: center;">Food Delivery with HERE</h1>
@@ -22,7 +21,8 @@
     </body>
     <script>
         var platform = new H.service.Platform({
-            apikey: "2ITw12WWsHyI1nQEVyxMslmxvABZyXlrmxAUJdK3DkI"   // JS APIKEY
+            apikey: "eD_IzP_4psnri8dg2gg3-AdnamvR5vriLzfDccLfW1A"
+            // "2ITw12WWsHyI1nQEVyxMslmxvABZyXlrmxAUJdK3DkI"   // JS APIKEY
         });
 
         // Obtain the default map types from the platform object:
@@ -40,7 +40,24 @@
                 center: myPosition
             });
 
-        var ui = H.ui.UI.createDefault(map, defaultLayers);
+        var ui = H.ui.UI.createDefault(map, defaultLayers, 'en-US');
+        //  To change the language, change the 'en-US' to the language code you want
+        //  other language codes:
+        // en-US – English (United States)
+        // de-DE – German
+        // es-ES – Spanish
+        // fi-FI – Finnish
+        // fr-FR – French
+        // it-IT – Italian
+        // nl-NL – Dutch
+        // pl-PL – Polish
+        // pt-BR – Portuguese (Brazil)
+        // pt-PT – Portuguese (Portugal)
+        // ru-RU – Russian
+        // tr-TR – Turkish
+        // zh-CN – Chinese (China)
+
+
 
         var mapEvents = new H.mapevents.MapEvents(map);
 
@@ -119,14 +136,19 @@
 
             let routingParameters = {
                 // The routing mode:
-                'mode': 'fastest;car',
+                mode: 'fastest;car;traffic:enabled',
                 // The start point of the route:
-                'waypoint0': restPos.lat+','+restPos.lng ,
+                waypoint0: restPos.lat+','+restPos.lng ,
                 // The end point of the route:
-                'waypoint1': myPosition.lat+','+myPosition.lng,
+                waypoint1: myPosition.lat+','+myPosition.lng,
                 // To retrieve the shape of the route we choose the route
                 // representation mode 'display'
-                'representation': 'display'
+                representation: 'display',
+
+                routeattributes : 'summary,shape',
+
+                language: "en-US"
+
                 };
 
             router.calculateRoute(routingParameters, onResult,
@@ -177,30 +199,42 @@
                 // Add the route polyline and the two markers to the map:
                 map.addObjects([routeLine,startMarker]);
 
+                console.log(route)
+
                 let maneuver = route.leg[0].maneuver;
-                displayInstructions(maneuver);
+                let summary = route.summary;
+                displayInstructions(maneuver,summary);
 
                 // Set the map's viewport to make the whole route visible:
                 map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
             }
         };
 
-        function displayInstructions(maneuver){
 
-            let totalTravelTime = 0;
-               
-                for(let i=0; i< maneuver.length; i++){
-
-                    totalTravelTime += maneuver[i].travelTime ;
-
-                    instructions = maneuver[i].instruction;
-                    // console.log(instructions)
-                    document.getElementById("panel").innerHTML+= (i+1) + ') '+instructions +  `<br>`;
-
-                }
-
-            document.getElementById("panel").innerHTML+="Estimated time : " + (totalTravelTime/60) + ' min' ;
+        Number.prototype.toMMSS = function () {
+            return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
         }
+
+        function displayInstructions(maneuver,summary){
+
+            var totalTravelTime = 0;
+               
+            for(let i=0; i< maneuver.length; i++){
+
+                instructions = maneuver[i].instruction;
+                // console.log(instructions)
+                document.getElementById("panel").innerHTML+= ( i+1) + ') '+instructions +  `<br>`;
+
+            }
+
+            document.getElementById("panel").innerHTML+="Total distance : " + (summary.distance) + ' m' ;
+
+            document.getElementById("panel").innerHTML+="Estimated time : " + summary.travelTime.toMMSS();
+        }
+
+
+
+       
 
     </script>
 </html>

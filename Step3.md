@@ -1,4 +1,5 @@
 # Select the Restaurant number 5 in the list for delivery
+- The numbering here is from 0 to 99 so the 5th restaurant will be number 4
 
 ## Add the following code after ```map.addObject(restGroup);``` within the '}' in the previous step
 
@@ -12,17 +13,25 @@
 Add the following code before </script> tag
 
 ```javascript
-        function showRoute(deliveryRestPosition){
+       function showRoute(restPos){
+
+            // console.log(restPos);
 
             let routingParameters = {
                 // The routing mode:
-                'mode': 'fastest;car',
+                mode: 'fastest;car;traffic:enabled',
                 // The start point of the route:
-                'waypoint0': deliveryRestPosition.lat+','+deliveryRestPosition.lng ,
+                waypoint0: restPos.lat+','+restPos.lng ,
                 // The end point of the route:
-                'waypoint1': myPosition.lat+','+myPosition.lng,
-                // To retrieve the shape of the route we choose the route representation mode 'display'
-                'representation': 'display'
+                waypoint1: myPosition.lat+','+myPosition.lng,
+                // To retrieve the shape of the route we choose the route
+                // representation mode 'display'
+                representation: 'display',
+
+                routeattributes : 'summary,shape',
+
+                language: "en-US"
+
                 };
 
             router.calculateRoute(routingParameters, onResult,

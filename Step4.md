@@ -6,29 +6,35 @@
 ```javascript
 
                 let maneuver = route.leg[0].maneuver;
-                displayInstructions(maneuver);
+                let summary = route.summary;
+                displayInstructions(maneuver,summary);
 
 ```
 
 # Display these instructions in the "panel"
+- Copy the following code above the ''' </script> ''' tag 
 
 ```javascript
 
-        function displayInstructions(maneuver){
+         Number.prototype.toMMSS = function () {
+            return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
+        }
 
-            let totalTravelTime = 0;
+        function displayInstructions(maneuver,summary){
+
+            var totalTravelTime = 0;
                
-                for(let i=0; i< maneuver.length; i++){
+            for(let i=0; i< maneuver.length; i++){
 
-                    totalTravelTime += maneuver[i].travelTime ;
+                instructions = maneuver[i].instruction;
+                // console.log(instructions)
+                document.getElementById("panel").innerHTML+= ( i+1) + ') '+instructions +  `<br>`;
 
-                    instructions = maneuver[i].instruction;
-                    // console.log(instructions)
-                    document.getElementById("panel").innerHTML+= (i+1) + ') '+instructions +  `<br>`;
+            }
 
-                }
+            document.getElementById("panel").innerHTML+="Total distance : " + (summary.distance) + ' m' ;
 
-            document.getElementById("panel").innerHTML+="Estimated time : " + (totalTravelTime/60) + ' min' ;
+            document.getElementById("panel").innerHTML+="Estimated time : " + summary.travelTime.toMMSS();
         }
 ```
 

@@ -23,7 +23,6 @@ This makes it super easy to see your application on your browser.
         <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
         <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
         <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
-        <script type="text/javascript" src="credentials.js"></script>
     </head>
     <body>
         <h1 style="text-align: center;">Food Delivery with HERE</h1>
@@ -57,7 +56,7 @@ This makes it super easy to see your application on your browser.
                 center: myPosition
             });
 
-        var ui = H.ui.UI.createDefault(map, defaultLayers);
+        var ui = H.ui.UI.createDefault(map, defaultLayers, 'en-US');
 
         var mapEvents = new H.mapevents.MapEvents(map);
 
@@ -73,6 +72,22 @@ This makes it super easy to see your application on your browser.
     </script>
 </html>
 ```
+
+# Changing the language of the map
+- To change the language, change the 'en-US' to the language code you want:
+- en-US – English (United States)
+- de-DE – German
+- es-ES – Spanish
+- fi-FI – Finnish
+- fr-FR – French
+- it-IT – Italian
+- nl-NL – Dutch
+- pl-PL – Polish
+- pt-BR – Portuguese (Brazil)
+- pt-PT – Portuguese (Portugal)
+- ru-RU – Russian
+- tr-TR – Turkish
+- zh-CN – Chinese (China)
 
 # Adding a position marker using map object of Interactive maps API
 - Add a folder named img inside the folder Food_Delivery_With_HERE
