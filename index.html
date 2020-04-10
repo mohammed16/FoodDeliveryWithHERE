@@ -22,7 +22,7 @@
     </body>
     <script>
         var platform = new H.service.Platform({
-            apikey: window.hereAPIKeys.JS_Key   // JS APIKEY
+            apikey: "2ITw12WWsHyI1nQEVyxMslmxvABZyXlrmxAUJdK3DkI"   // JS APIKEY
         });
 
         // Obtain the default map types from the platform object:
@@ -61,31 +61,23 @@
 
         map.addObject(posMarker);
 
-        // display all take-out/ delivery restaurants around you 
+
+        // Get an instance of the geocoding service:
+        var service = platform.getSearchService();
+
         function showDeliveryRest(){
 
-        let params = {
-            "api" : "browse.search.hereapi.com/v1/browse",
-            "apiKey" : window.hereAPIKeys.REST_Key, // REST APIKEY
-            "at" : myPosition.lat+','+myPosition.lng, // position in lat,lng format as opposed to {lat:x, lng:y}
-            "q" : "restaurant",
-            "categories" : "100-1000-0000,100-1000-0003", // category Take Out and Delivery Only 
-            // for more, got to https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics-places/places-category-system-full.html
-            "limit" : 100
+            let param = {
+                at : myPosition.lat+','+myPosition.lng,
+                q: "restaurant",
+                categories: "100-1000-0000,100-1000-0003", // category Take Out and Delivery Only ,
+                 // for more, got to https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics-places/places-category-system-full.html
+                limit:100
+            }; 
+
+            service.browse(param,displayRestaurants,alert);
         }
 
-        let url = `https://${params.api}?apiKey=${params.apiKey}&at=${params.at}&categories=${params.categories}&name=${params.q}&limit=${params.limit}`;
-        fetch(url,{
-            "method":"GET"
-        })
-        .then(response => response.json())
-        .then(response => {
-                    displayRestaurants(response);
-            }, error => {
-                    console.error(error);
-            });
-
-        }
 
         function displayRestaurants(response){
             var restGroup = new H.map.Group();

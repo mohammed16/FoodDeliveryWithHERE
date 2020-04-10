@@ -1,19 +1,15 @@
+## Download the ide [VSCODE](https://code.visualstudio.com/download)
+## Install the extension Live Server by Ritwick Dey
+This makes it super easy to see your application on your browser.
 
-Open your favourite IDE or a simple code editor like notepad++
-<br>
-I use [VSCODE](https://code.visualstudio.com/download)
+![Live Server Extension](/img/live_server.png) 
 
-## Create a file and rename it to 'credentials.js' and save your credentials in it
-```javascript
+## Create a folder named Food_Delivery_With_HERE
+- In VSCODE click on File > Open.. 
+- Open the folder Food_Delivery_With_HERE
+- Click on File > New File and save it as 'index.html' within the folder
 
-hereAPIKeys = {
-    JS_Key :"ENTER_YOUR_JS_APIKEY",
-    REST_Key:"ENTER_YOUR_REST_APIKEY"
-}
-
-```
-## Create a file and rename it to 'index.html' and save the code below in it
-
+## Copy the code below in the file 'index.html'
 
 ``` html
 <!DOCTYPE html>
@@ -40,7 +36,7 @@ hereAPIKeys = {
     </body>
     <script>
         var platform = new H.service.Platform({
-            apikey: window.hereAPIKeys.JS_Key   // JS APIKEY
+            apikey: "YOUR_JS_API_KEY"   
         });
 
         // Obtain the default map types from the platform object:
@@ -70,17 +66,25 @@ hereAPIKeys = {
         // Get an instance of the routing service for using the routing API
 
         var router = platform.getRoutingService();
+
+        // Get an instance of the geocoding and search service:
+
+        var service = platform.getSearchService();
     </script>
 </html>
 ```
 
 # Adding a position marker using map object of Interactive maps API
-Add the following code before </script> tag
+- Add a folder named img inside the folder Food_Delivery_With_HERE
+- Inside the folder img, save the image you want as the icon for restaurants and home
+- You can also download the ones I used for [home](img/home.png) and [restaurants](img/takeout.png)
+- Add the following code before </script> tag
+
 
 ```javascript
             // create an icon for the marker. Choose any image you want. I created mine using draw.io 
             
-            var homeIcon = new H.map.Icon('img/home.png');
+            var homeIcon = new H.map.Icon('img/home.png'); 
             
             var posMarker = new H.map.Marker(myPosition,{icon:homeIcon});
                 

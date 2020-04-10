@@ -14,8 +14,6 @@ Add the following code before </script> tag
 ```javascript
         function showRoute(deliveryRestPosition){
 
-            // console.log(restPos);
-
             let routingParameters = {
                 // The routing mode:
                 'mode': 'fastest;car',
