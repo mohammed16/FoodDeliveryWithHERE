@@ -2,7 +2,7 @@
 ## Install the extension Live Server by Ritwick Dey
 This makes it super easy to see your application on your browser.
 
-[Live Server Extension](img/live_server.png) 
+![Live Server Extension](img/live_server.png) 
 
 ## Create a folder named Food_Delivery_With_HERE
 - In VSCODE click on File > Open.. 
