@@ -1,6 +1,6 @@
 ![HERE Logo](/img/titleImage.png) 
 
-In this workshop we will learn to use the JS and REST APIs from the HERE Location Suite.
+In this workshop we will learn to use the JavaScript APIs from the HERE Location Suite.
 
 #### Step 1 : We render a map and place a marker on our current position with a custom image
 #### Step 2 : We search for all takeout restaurants around us and place markers on them
